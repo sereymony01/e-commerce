@@ -3,10 +3,12 @@
     <div class = "Banner-content">
       <h2>{{ title }}</h2>
       <!-- <p>{{ description }}</p> -->
-      <button :style="{ backgroundColor: bgBtnColor }" @click=" ">Shop Now <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+      <!-- <button :style="{ backgroundColor: bgBtnColor }" @click=" ">Shop Now <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
 </svg>
-</button>
+</button> -->
+
+<shop-button :bg-btn-color="bgBtnColor" :label = "label"/>
     </div>
     <div class="bannerImg">
       <img :src="imageSrc" :alt="title" class="banner-image" />
@@ -15,13 +17,20 @@
 </template>
 
 <script>
+
+import ShopButton from './ShopButton.vue';
+
 export default {
+  components:{
+    ShopButton,
+  },
   props: {
     title: String,
-    description: String,
+    // description: String,
     imageSrc: String,
     bgColor: String,
     bgBtnColor: String,
+    label: String,
   },
   method: {
     shopNow() {

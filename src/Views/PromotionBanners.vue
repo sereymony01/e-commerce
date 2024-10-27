@@ -6,9 +6,9 @@
       :title="banner.title"
       :description="banner.description"
       :imageSrc="banner.imageSrc"
-      :bgColor = "banner.bgColor"
+      :bgColor="banner.bgColor"
       :bgBtnColor="banner.bgBtnColor"
-      />
+      :label="banner.label" />
   </div>
 </template>
 <script>
@@ -22,24 +22,26 @@ export default {
           title: "Everyday Fresh & Clean with Our Products",
           description: "Try it!",
           imageSrc: "./public/images/OnionNew.png",
-          bgColor : "#F0E8D5",
-          bgBtnColor: "#36b37e"
-          
+          bgColor: "#F0E8D5",
+          bgBtnColor: "#36b37e",
+          label: "Shop Now",
         },
         {
           title: "Make your Breakfast Healthy and Easy",
           description: "Try it!",
           imageSrc: "./public/images/myStraw.png",
 
-            bgColor : "#F3E8E8",
-            bgBtnColor: "#36b37e"
+          bgColor: "#F3E8E8",
+          bgBtnColor: "#36b37e",
+          label: "Shop Now",
         },
         {
           title: "The best Organic Products Online",
           description: "Try it!",
           imageSrc: "./public/images/allveg.png",
-            bgColor : "#E7EAF3",
-            bgBtnColor: "#FDC040"
+          bgColor: "#E7EAF3",
+          bgBtnColor: "#FDC040",
+          label: "Shop Now",
         },
       ],
     };
@@ -48,13 +50,12 @@ export default {
 </script>
 
 <style scoped>
-
 .promotion-banner-list {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row ;
+  flex-direction: row;
   /* justify-content: space-around; */
-  padding: 20px;
+  /* padding: 20px; */
   /* background-color: #f0f2f5; */
 }
 </style>
