@@ -3,10 +3,10 @@
     <ProductCategory
       v-for="(product, index) in products"
       :key="index"
-      :title="product.title"
-      :items="product.items"
-      :imageSrc="product.imageSrc"
-      :bgColor="product.bgColor" />
+      :name="product.name"
+      :productCount="product.productCount"
+      :image="product.image"
+      :color="product.color" />
   </div>
 </template>
 <script>
@@ -18,66 +18,66 @@ export default {
     return {
       products: [
         {
-          title: "Buger",
-          items: 14,
-          imageSrc: "./public/images/Hamburger.svg",
-          bgColor: "#F2FCE4",
+          name: "Buger",
+          productCount: 14,
+          image: "./public/images/Hamburger.svg",
+          color: "#F2FCE4",
         },
         {
-          title: "Peach",
-          items: 17,
-          imageSrc: "./public/images/Peach.svg",
-          bgColor: "#FFFCEB",
+          name: "Peach",
+          productCount: 17,
+          image: "./public/images/Peach.svg",
+          color: "#FFFCEB",
         },
         {
-          title: "Organic Kiwi",
-          items: 21,
-          imageSrc: "./public/images/Kiwi.svg",
-          bgColor: "#ECFFEC",
+          name: "Organic Kiwi",
+          productCount: 21,
+          image: "./public/images/Kiwi.svg",
+          color: "#ECFFEC",
         },
         {
-          title: "Red Apple",
-          items: 25,
-          imageSrc: "./public/images/RedApple.svg",
-          bgColor: "#FEEFEA",
+          name: "Red Apple",
+          productCount: 25,
+          image: "./public/images/RedApple.svg",
+          color: "#FEEFEA",
         },
         {
-          title: "Snack",
-          items: 34,
-          imageSrc: "./public/images/snacks.svg",
-          bgColor: "#FFF3EB",
+          name: "Snack",
+          productCount: 34,
+          image: "./public/images/snacks.svg",
+          color: "#FFF3EB",
         },
         {
-          title: "Black Ples",
-          items: 63,
-          imageSrc: "./public/images/BlackPulm.svg",
-          bgColor: "#FFF3FF",
+          name: "Black Ples",
+          productCount: 63,
+          image: "./public/images/BlackPulm.svg",
+          color: "#FFF3FF",
         },
         {
-          title: "Vegetabe",
-          items: 53,
-          imageSrc: "./public/images/Vegetables.svg",
-          bgColor: "#F2FCE4",
+          name: "Vegetabe",
+          productCount: 53,
+          image: "./public/images/Vegetables.svg",
+          color: "#F2FCE4",
         },
         {
-          title: "Headphone",
-          items: 25,
-          imageSrc: "./public/images/HeadPhone.svg",
-          bgColor: "#FFFCEB",
-        },
-      
-        {
-          title: "Cake and Milk",
-          items: 53,
-          imageSrc: "./public/images/CakeAndMilk.svg",
-          bgColor: "#F2FCE4",
+          name: "Headphone",
+          productCount: 25,
+          image: "./public/images/HeadPhone.svg",
+          color: "#FFFCEB",
         },
 
         {
-          title: "Orange",
-          items: 63,
-          imageSrc: "./public/images/Orange.svg",
-          bgColor: "#FFF3FF",
+          name: "Cake and Milk",
+          productCount: 53,
+          image: "./public/images/CakeAndMilk.svg",
+          color: "#F2FCE4",
+        },
+
+        {
+          name: "Orange",
+          productCount: 63,
+          image: "./public/images/Orange.svg",
+          color: "#FFF3FF",
         },
       ],
     };
@@ -87,6 +87,7 @@ export default {
 <style scoped>
 .product-list {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   width: 100vw;
   /* padding: 20px; */

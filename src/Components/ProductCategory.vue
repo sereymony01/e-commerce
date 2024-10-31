@@ -1,7 +1,7 @@
 <template>
-  <div  :style = "{backgroundColor: bgColor}" class="product-category">
-    <img :src="imageSrc" :alt="title" class="product-image" />
-    <h3>{{ title }}</h3>
+  <div  :style = "{backgroundColor: color}" class="product-category">
+    <img :src="image" :alt="name" class="product-image" />
+    <h3>{{ name }}</h3>
     <p >
       {{ items }} items
     </p>
@@ -11,10 +11,10 @@
 <script>
 export default {
   props: {
-    title: String,
-    items: Number,
-    imageSrc: String,
-    bgColor: String,
+    name: String,
+    productCount: Number,
+    image: String,
+    color: String,
   },
 
  
@@ -38,6 +38,7 @@ export default {
   background-color: #f0f2f5;
   border-radius: 10px;
   margin: 10px;
+  cursor: pointer;
 }
 .product-category p {
   font-weight: 400;

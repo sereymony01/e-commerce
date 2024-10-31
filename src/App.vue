@@ -1,12 +1,9 @@
 <template>
- <div>
-
-  <product-categories/>
-  <promotion-banners/>
-
+  <div>
+    <product-categories />
+    <promotion-banners />
   </div>
 
- 
   <RouterView />
 </template>
 
@@ -18,29 +15,27 @@ export default {
   components: {
     ProductCategories,
     PromotionBanners,
-   
   },
 
   data() {
-    return {
-     
-
-    
-    };
+    return {};
   },
 };
 </script>
 
 <style scoped>
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color:black;
-  
+  color: black;
 }
-body{
-  background-color: rgb(198, 198, 198);
+div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
-
+html {
+  background-color: rgb(255, 255, 255);
+}
 </style>
