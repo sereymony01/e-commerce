@@ -21,7 +21,7 @@ export default {
     return {};
   },
 };
-</script>
+</script>//new script
 
 <style scoped>
 * {
