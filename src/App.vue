@@ -1,4 +1,13 @@
 <template>
+  <div>
+    <MenuComponent
+      v-for="menu in menus.filter((menu) => menu.id !== 2)"
+      :key="menu.id"
+      :textTitle="menu.textTitle"
+      v-bind="menu"
+      @groupSelected="updateCategoryGroup"
+    />
+  </div>
   <div class="row-1">
     <CategoryComponent
       v-for="category in categories"
@@ -19,159 +28,127 @@
       :buttonColor="promotion.buttonColor"
     />
   </div>
+  <div>
+    <MenuComponent
+      v-if="menus.find((menu) => menu.id === 2)"
+      :key="menus.find((menu) => menu.id === 2).id"
+      :textTitle="menus.find((menu) => menu.id === 2).textTitle"
+      v-bind="menus.find((menu) => menu.id === 2)"
+      @groupSelected="updateProductGroup"
+    />
+  </div>
+  <div class="row-3">
+    <ProductComponent
+      v-for="product in productsByGroup"
+      :key="product.id"
+      :name="product.name"
+      :rating="product.rating"
+      :size="product.size"
+      :images="product.image"
+      :price="product.price"
+      :promotionAsPercentage="product.promotionAsPercentage"
+      :categoryId="product.categoryId"
+      :instock="product.instock"
+      :coundSold="product.countSold"
+      :group="product.group"
+    />
+  </div>
 </template>
 
 <script>
 import CategoryComponent from "./components/CategoryComponent.vue";
 import PromotionComponent from "./components/PromotionComponent.vue";
 import ButtonComponent from "./components/ButtonComponent.vue";
-
-import axios from "axios";
-
+// import axios from "axios";
+import MenuComponent from "./components/MenuComponent.vue";
+import ProductComponent from "./components/ProductComponent.vue";
+import { useProductStore } from "./stores/Product";
+import { mapState } from "pinia";
 export default {
   components: {
     CategoryComponent,
     PromotionComponent,
     ButtonComponent,
+    MenuComponent,
+    ProductComponent,
   },
-
+  
   data() {
     return {
-      /*
-      categories: [
+      currentGroupname: "Group A",
+      currentProductGroup: null, //For product filtering
+      currentCategoryGroup:null, //For Category filtering
+      menus: [
         {
           id: 1,
-          image: "./src/assets/images/hamburger.svg",
-          name: "Cake & Milk",
-          productCount: 14,
-          color: "#f2fce4",
+          textTitle: "Featured Categories",
         },
         {
           id: 2,
-          image: "./src/assets/images/persimmon.svg",
-          name: "Peach",
-          productCount: 17,
-          color: "#fffceb",
-        },
-        {
-          id: 3,
-          image: "./src/assets/images/kiwi.svg",
-          name: "Organic Kiwi",
-          productCount: 21,
-          color: "#ecffec",
-        },
-        {
-          id: 4,
-          image: "./src/assets/images/redapple.svg",
-          name: "Red Apple",
-          productCount: 28,
-          color: "#f2fce4",
-        },
-        {
-          id: 5,
-          image: "./src/assets/images/snack.svg",
-          name: "Snack",
-          productCount: 34,
-          color: "#fff3eb",
-        },
-        {
-          id: 6,
-          image: "./src/assets/images/blackplum.svg",
-          name: "Black plum",
-          productCount: 25,
-          color: "#fff3ff",
-        },
-        {
-          id: 7,
-          image: "./src/assets/images/vegetable.svg",
-          name: "Vegetable",
-          productCount: 65,
-          color: "#f2fce4",
-        },
-        {
-          id: 8,
-          image: "./src/assets/images/headphone.svg",
-          name: "Headphone",
-          productCount: 33,
-          color: "#fffceb",
-        },
-        {
-          id: 9,
-          image: "./src/assets/images/foodpackage.svg",
-          name: "Cake & Milk",
-          productCount: 54,
-          color: "#f2fce4",
-        },
-        {
-          id: 10,
-          image: "./src/assets/images/orange.svg",
-          name: "Orange",
-          productCount: 63,
-          color: "#fff3ff",
+          textTitle: "Popular Component",
         },
       ],
-
-      promotions: [
-      {
-          id: 1,
-          color: "#f0e8d5",
-          title: "Everyday Fresh & Clean with Our Products",
-          image: "./src/assets/images/onions.svg",
-          buttonColor: "#3bb77e",
-        },
-        {
-          id: 2,
-          color: "#f3e8e8",
-          title: "Make your Breakfast Healthy and Easy",
-          image: "./src/assets/images/bottle.svg",
-          buttonColor: "#3bb77e",
-        },
-        {
-          id: 3,
-          color: "#e7eaf3",
-          title: "The best Organic Products Online",
-          image: "./src/assets/images/allvegetable.svg",
-          buttonColor: "#fdc041",
-        },
-      ],
-      */
-
-      categories: [],
-      promotions: [],
     };
   },
-
+  methods: {},
   methods: {
-    async fetchCategories() {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/categories"
-        );
-        this.categories = response.data;
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
+    updateCategoryGroup(group){
+      this.currentCategoryGroup = group || null;
     },
-
-    async fetchPromotions() {
-      // Axios call goes here
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/api/promotions"
-        );
-        this.promotions = response.data;
-      } catch (error) {
-        console.error("Error fetching promotions:", error);
-      }
-    },
+    updateProductGroup(group){
+      this.currentProductGroup = group || null;
+    }
   },
-
-
   mounted() {
-    // Mounted life cycle - It will be executed every time
-    // This component is loaded
-    this.fetchCategories();
-    this.fetchPromotions();
+    const productStore = useProductStore();
+    productStore.fetchCategories();
+    productStore.fetchPromotions();
+    productStore.fetchGroup();
+    productStore.fetchProducts();
+  },
+  computed: {
+    // Map state and getters from the Pinia store
+    ...mapState(useProductStore, {
+      // Map the getter getPopularPRoduct to popularProducts
+      popularProducts: "getPopularProduct",
+      // Dynamically call getCategoriesByGroup with currentGroupName
+      categories(store) {
+        return store.getCategoriesByGroup(this.currentGroupname);
+        if (!this.currentCategoryGroup) {
+          // If no group is selected, return all categories
+          return store.categories;
+        }
+        return store.getCategoriesByGroup(this.currentCategoryGroup);
+      },
+      // Dynamically call getProductsByGroup with currentGroupName
+      productsByGroup(store) {
+        return store.getProductsByGroup(this.currentGroupname);
+        // return store.getProductsByGroup(this.currentGroupname);
+        
+        if (!this.currentProductGroup) {
+          return store.products;
+        }
+        return store.getProductsByGroup(this.currentProductGroup);
+      },
+      // Dynamically call getProductsByCategory
+      getProductsByCategory(store){
+      getProductsByCategory(store) {
+        return store.getProductsByCategory;
+      },
+      // Get all products directly from the state
+      allProducts(store) {
+        return store.products;
+      },
+      // products(store) {
+      //   return store.products;
+      // },
+      // categories(store){
+      //   return store.categories;
+      // },
+      promotions(store) {
+        return store.promotions;
+      },
+    }),
   },
 };
 </script>
@@ -179,6 +156,8 @@ export default {
 <style>
 .row-1,
 .row-2 {
+.row-2,
+.row-3 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
